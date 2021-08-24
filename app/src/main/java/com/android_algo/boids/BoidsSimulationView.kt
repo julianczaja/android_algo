@@ -31,6 +31,8 @@ class BoidsSimulationView(
     private val boidPath = Path()
     private val boidMat = Matrix()
 
+    var isRunning = false
+
     @Inject
     @TextPaint
     lateinit var textPaint: Paint
@@ -48,13 +50,13 @@ class BoidsSimulationView(
         this.holder.addCallback(this)
     }
 
-    fun run() {
+    private fun run() {
         Timber.i("run")
 
-
+        isRunning = true
         var canvas: Canvas?
 
-        while (true) {
+        while (isRunning) {
             if (holder.surface.isValid) {
                 try {
                     canvas = holder.lockCanvas()
@@ -105,6 +107,7 @@ class BoidsSimulationView(
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         Timber.i("surfaceDestroyed")
         job?.cancel()
+        isRunning = false
         Timber.i("job cancelled")
     }
 
