@@ -1,4 +1,4 @@
-package com.android_algo.boids
+package com.android_algo.algorithms.boids
 
 import android.content.Context
 import android.graphics.*
@@ -106,6 +106,7 @@ class BoidsSimulationView(
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         Timber.i("surfaceDestroyed")
+
         job?.cancel()
         isRunning = false
         Timber.i("job cancelled")

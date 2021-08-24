@@ -1,4 +1,4 @@
-package com.android_algo.boids
+package com.android_algo.algorithms.boids
 
 import com.android_algo.math.Float2
 import java.util.*

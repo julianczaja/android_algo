@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/boidsFragment"
+        android:name="com.android_algo.presentation.boids.BoidsFragment"
+        android:label="boids_fragment"
+        tools:layout="@layout/boids_fragment" />
+
+    <fragment
+        android:id="@+id/randomWalkFragment"
+        android:name="com.android_algo.presentation.randomwalk.RandomWalkFragment"
+        android:label="random_walk_fragment"
+        tools:layout="@layout/random_walk_fragment" />
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.android_algo.presentation.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_randomWalkFragment"
+            app:destination="@id/randomWalkFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_boidsFragment"
+            app:destination="@id/boidsFragment" />
+    </fragment>
+
+</navigation>
