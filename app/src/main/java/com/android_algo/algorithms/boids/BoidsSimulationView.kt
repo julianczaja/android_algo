@@ -5,10 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.android_algo.di.BoidPaint
 import com.android_algo.di.BorderPaint
 import com.android_algo.di.TextPaint
@@ -29,6 +26,8 @@ class BoidsSimulationView(
     private lateinit var viewModel: BoidsSimulationViewModel
     private var canvas: Canvas? = null
     private val borderWidth = 8f
+    private val boidWidth: Float = 25f
+    private val boidHeight: Float = 50f
     private val borderPath = Path()
     private val boidPath = Path()
     private val boidMat = Matrix()
@@ -55,28 +54,19 @@ class BoidsSimulationView(
         super.onAttachedToWindow()
 
         val viewModelStoreOwner = findViewTreeViewModelStoreOwner()!!
+        val viewLifecycleOwner = findViewTreeLifecycleOwner()!!
+
         viewModel = ViewModelProvider(viewModelStoreOwner).get(BoidsSimulationViewModel::class.java)
-    }
 
-    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
-        Timber.i("onSizeChanged")
-        super.onSizeChanged(width, height, oldWidth, oldHeight)
-
-        viewModel.initSimulation(width, height)
-    }
-
-    override fun surfaceCreated(holder: SurfaceHolder) {
-        Timber.i("surfaceCreated")
-
-        viewModel.viewModelScope.launch(Dispatchers.Default) {
+        viewLifecycleOwner.lifecycle.coroutineScope.launch(Dispatchers.Default) {
             viewModel.boids.collect { boids ->
                 if (holder.surface.isValid) {
                     try {
                         // lockCanvas() is very slow and can take up to 20ms :(
                         canvas = holder.lockCanvas()
                         if (canvas == null) {
-                            Timber.e("Canvas is null!")
-                            return@collect
+                            Timber.w("Canvas is null. Skipping frame")
+//                            return@collect
                         }
 
                         canvas!!.drawColor(Color.LTGRAY)
@@ -84,13 +74,25 @@ class BoidsSimulationView(
                             drawBoid(boid, canvas!!)
                         }
                         drawBorder(canvas!!)
-                    } finally {
                         holder.unlockCanvasAndPost(canvas)
+
+                    } catch (e: Exception) {
+                        Timber.w(e.message)
                     }
                 }
             }
         }
+    }
 
+    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
+        Timber.i("onSizeChanged, $oldWidth -> $width, $oldHeight -> $height")
+        super.onSizeChanged(width, height, oldWidth, oldHeight)
+        viewModel.updateBoardBounds(width, height)
+        viewModel.initSimulation()
+    }
+
+    override fun surfaceCreated(holder: SurfaceHolder) {
+        Timber.i("surfaceCreated")
         viewModel.startSimulation()
     }
 
@@ -125,10 +127,10 @@ class BoidsSimulationView(
 
         boidPath.apply {
             rewind()
-            moveTo(boid.position.x - boid.width / 2f, boid.position.y + boid.height / 2f)
-            lineTo(boid.position.x + boid.width / 2f, boid.position.y + boid.height / 2f)
-            lineTo(boid.position.x, boid.position.y - boid.height / 2f)
-            lineTo(boid.position.x - boid.width / 2f, boid.position.y + boid.height / 2f)
+            moveTo(boid.position.x - boidWidth / 2f, boid.position.y + boidHeight / 2f)
+            lineTo(boid.position.x + boidWidth / 2f, boid.position.y + boidHeight / 2f)
+            lineTo(boid.position.x, boid.position.y - boidHeight / 2f)
+            lineTo(boid.position.x - boidWidth / 2f, boid.position.y + boidHeight / 2f)
             transform(boidMat)
         }
         canvas.drawPath(boidPath, boidPaint)

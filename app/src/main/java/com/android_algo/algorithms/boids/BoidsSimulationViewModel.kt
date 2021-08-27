@@ -2,16 +2,11 @@ package com.android_algo.algorithms.boids
 
 import androidx.lifecycle.ViewModel
 import com.android_algo.math.Float2
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 
 class BoidsSimulationViewModel : ViewModel() {
-
-//    private val _liveData = MutableLiveData<Int>(1)
-//    val liveData: LiveData<Int>
-//        get() = _liveData
 
     private val boidsSimulation = BoidsSimulation()
     private var isRunning = false
@@ -22,7 +17,6 @@ class BoidsSimulationViewModel : ViewModel() {
             if (isRunning) {
                 val dt = System.currentTimeMillis() - lastFrameTime
                 lastFrameTime = System.currentTimeMillis()
-                println("DT: ${dt.toInt()}")
 
                 boidsSimulation.update(dt)
                 emit(boidsSimulation.boids)
@@ -32,11 +26,14 @@ class BoidsSimulationViewModel : ViewModel() {
         }
     }
 
-    fun initSimulation(width: Int, height: Int) {
-        boidsSimulation.populateBoids(
-            boidsCount = 50,
-            boardSize = Float2(width.toFloat(), height.toFloat())
-        )
+    fun updateBoardBounds(width: Int, height: Int) {
+        Timber.i("updateBoardBounds")
+        boidsSimulation.boardBounds = Float2(width.toFloat(), height.toFloat())
+    }
+
+    fun initSimulation() {
+        Timber.i("initSimulation")
+        boidsSimulation.populateBoids(boidsCount = 50)
     }
 
     fun startSimulation() {

@@ -1,7 +1,6 @@
 package com.android_algo.algorithms.boids
 
 import com.android_algo.math.Float2
-import com.android_algo.math.sqr
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -9,20 +8,32 @@ class BoidsSimulation(
     val boids: MutableList<Boid> = mutableListOf()
 ) {
 
+    var sightRange: Float = 50f
+    var boardBounds = Float2(0f, 0f)
+
     fun update(dt: Long) {
         if (boids.isNotEmpty()) {
+
             boids.forEach { boid ->
-                boid.update(dt)
+                val boidsInRange = getBoidsInRange(boid)
+                boid.update(dt, boardBounds, boidsInRange)
             }
         }
     }
 
-    fun populateBoids(boidsCount: Int, boardSize: Float2) {
+    fun getBoidsInRange(boid: Boid): List<Boid> {
+        val boidsInRange = mutableListOf<Boid>()
+
+        return boidsInRange
+    }
+
+    fun populateBoids(boidsCount: Int) {
+        boids.clear()
         Timber.i("populateBoids")
         for (x in 1..boidsCount) {
-            val boid = Boid(bounds = boardSize)
-            boid.position.x = Random.nextFloat() * boardSize.x
-            boid.position.y = Random.nextFloat() * boardSize.y
+            val boid = Boid()
+            boid.position.x = Random.nextFloat() * boardBounds.x
+            boid.position.y = Random.nextFloat() * boardBounds.y
             boid.velocity.x = Random.nextDouble(-1.0, 1.0).toFloat()
             boid.velocity.y = Random.nextDouble(-1.0, 1.0).toFloat()
 
