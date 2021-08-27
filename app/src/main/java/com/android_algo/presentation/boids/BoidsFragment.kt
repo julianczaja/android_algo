@@ -30,6 +30,7 @@ class BoidsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        binding.surfaceView.
     }
 
     override fun onDestroyView() {

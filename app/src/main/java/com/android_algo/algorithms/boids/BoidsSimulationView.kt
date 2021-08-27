@@ -5,14 +5,16 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.viewModelScope
 import com.android_algo.di.BoidPaint
 import com.android_algo.di.BorderPaint
 import com.android_algo.di.TextPaint
-import com.android_algo.math.Float2
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,16 +24,14 @@ import kotlin.math.atan2
 class BoidsSimulationView(
     context: Context,
     attributeSet: AttributeSet
-) : SurfaceView(context, attributeSet), SurfaceHolder.Callback {
+) : SurfaceView(context, attributeSet), SurfaceHolder.Callback, LifecycleObserver {
 
-    private val boidsSimulation = BoidsSimulation()
-    private var job: Job? = null
+    private lateinit var viewModel: BoidsSimulationViewModel
+    private var canvas: Canvas? = null
     private val borderWidth = 8f
     private val borderPath = Path()
     private val boidPath = Path()
     private val boidMat = Matrix()
-
-    var isRunning = false
 
     @Inject
     @TextPaint
@@ -50,54 +50,48 @@ class BoidsSimulationView(
         this.holder.addCallback(this)
     }
 
-    private fun run() {
-        Timber.i("run")
+    override fun onAttachedToWindow() {
+        Timber.i("onAttachedToWindow")
+        super.onAttachedToWindow()
 
-        isRunning = true
-        var canvas: Canvas?
-
-        while (isRunning) {
-            if (holder.surface.isValid) {
-                try {
-                    canvas = holder.lockCanvas()
-                    if (canvas == null) {
-                        continue
-                    }
-
-                    canvas.drawColor(Color.LTGRAY)
-
-                    boidsSimulation.update(16)
-                    boidsSimulation.boids.forEach { boid ->
-                        drawBoid(boid, canvas)
-                    }
-
-                    drawBorder(canvas)
-
-                    holder.unlockCanvasAndPost(canvas)
-                } catch (e: Exception) {
-                    Timber.e(e.message)
-                }
-            }
-        }
+        val viewModelStoreOwner = findViewTreeViewModelStoreOwner()!!
+        viewModel = ViewModelProvider(viewModelStoreOwner).get(BoidsSimulationViewModel::class.java)
     }
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         Timber.i("onSizeChanged")
         super.onSizeChanged(width, height, oldWidth, oldHeight)
 
-        boidsSimulation.populateBoids(
-            boidsCount = 30,
-            boardSize = Float2(width.toFloat(), height.toFloat())
-        )
+        viewModel.initSimulation(width, height)
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         Timber.i("surfaceCreated")
 
-        job = CoroutineScope(Dispatchers.Default).launch {
-            Timber.i("job started")
-            run()
+        viewModel.viewModelScope.launch(Dispatchers.Default) {
+            viewModel.boids.collect { boids ->
+                if (holder.surface.isValid) {
+                    try {
+                        // lockCanvas() is very slow and can take up to 20ms :(
+                        canvas = holder.lockCanvas()
+                        if (canvas == null) {
+                            Timber.e("Canvas is null!")
+                            return@collect
+                        }
+
+                        canvas!!.drawColor(Color.LTGRAY)
+                        boids.forEach { boid ->
+                            drawBoid(boid, canvas!!)
+                        }
+                        drawBorder(canvas!!)
+                    } finally {
+                        holder.unlockCanvasAndPost(canvas)
+                    }
+                }
+            }
         }
+
+        viewModel.startSimulation()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
@@ -106,10 +100,7 @@ class BoidsSimulationView(
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         Timber.i("surfaceDestroyed")
-
-        job?.cancel()
-        isRunning = false
-        Timber.i("job cancelled")
+        viewModel.stopSimulation()
     }
 
     private fun drawBorder(canvas: Canvas) {

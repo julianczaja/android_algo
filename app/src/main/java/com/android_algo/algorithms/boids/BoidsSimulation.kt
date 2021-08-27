@@ -1,6 +1,7 @@
 package com.android_algo.algorithms.boids
 
 import com.android_algo.math.Float2
+import com.android_algo.math.sqr
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -24,6 +25,14 @@ class BoidsSimulation(
             boid.position.y = Random.nextFloat() * boardSize.y
             boid.velocity.x = Random.nextDouble(-1.0, 1.0).toFloat()
             boid.velocity.y = Random.nextDouble(-1.0, 1.0).toFloat()
+
+            // Random normalized velocity
+            // val vX = Random.nextDouble(-1.0, 1.0).toFloat()
+            // val vY = Random.nextDouble(-1.0, 1.0).toFloat()
+            // val len = sqr(vX * vX + vY * vY)
+            // boid.velocity.x = vX / len
+            // boid.velocity.y = vY / len
+
             boids.add(boid)
         }
     }
