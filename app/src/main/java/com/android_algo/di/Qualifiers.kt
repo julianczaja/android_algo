@@ -8,8 +8,12 @@ annotation class BoidPaint
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class BoidSightPaint
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class BorderPaint
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class TextPaint
+annotation class BoidsBoardBackgroundPaint

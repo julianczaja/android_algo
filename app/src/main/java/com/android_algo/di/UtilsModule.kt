@@ -20,7 +20,7 @@ class UtilsModule {
     @BoidPaint
     fun provideBoidPaint(@ApplicationContext context: Context): Paint {
         return Paint().apply {
-            color = context.resources.getColor(R.color.boid, context.theme)
+            color = context.resources.getColor(R.color.boids, context.theme)
             strokeWidth = 5f
             style = Paint.Style.FILL_AND_STROKE
         }
@@ -28,26 +28,35 @@ class UtilsModule {
 
     @Singleton
     @Provides
-    @BorderPaint
-    fun provideBorderPaint(@ApplicationContext context: Context): Paint {
+    @BoidSightPaint
+    fun provideBoidSightPaint(@ApplicationContext context: Context): Paint {
         return Paint().apply {
-            color = context.resources.getColor(R.color.border, context.theme)
-            strokeJoin = Paint.Join.MITER
-            strokeCap = Paint.Cap.SQUARE
-            style = Paint.Style.STROKE
-            isAntiAlias = false
-            isDither = false
-            strokeWidth = 16f
+            color = context.resources.getColor(R.color.boidsSight, context.theme)
+            style = Paint.Style.FILL
         }
     }
 
     @Singleton
     @Provides
-    @TextPaint
-    fun provideTextPaint(@ApplicationContext context: Context): Paint {
+    @BorderPaint
+    fun provideBorderPaint(): Paint {
         return Paint().apply {
-            color = Color.RED
-            textSize = 50f
+            color = Color.BLACK
+            strokeJoin = Paint.Join.MITER
+            strokeCap = Paint.Cap.SQUARE
+            style = Paint.Style.STROKE
+            isAntiAlias = false
+            isDither = false
+            strokeWidth = 4f
+        }
+    }
+
+    @Singleton
+    @Provides
+    @BoidsBoardBackgroundPaint
+    fun provideBoidsBoardBackgroundPaint(@ApplicationContext context: Context): Paint {
+        return Paint().apply {
+            color = context.resources.getColor(R.color.boidsBoardBackground, context.theme)
             style = Paint.Style.FILL
         }
     }

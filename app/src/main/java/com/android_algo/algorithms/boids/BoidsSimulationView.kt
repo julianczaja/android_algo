@@ -6,9 +6,7 @@ import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.lifecycle.*
-import com.android_algo.di.BoidPaint
-import com.android_algo.di.BorderPaint
-import com.android_algo.di.TextPaint
+import com.android_algo.di.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -26,24 +24,27 @@ class BoidsSimulationView(
     private lateinit var viewModel: BoidsSimulationViewModel
     private var canvas: Canvas? = null
     private val borderWidth = 8f
-    private val boidWidth: Float = 25f
-    private val boidHeight: Float = 50f
+    private val boidWidth: Float = 20f
+    private val boidHeight: Float = 40f
     private val borderPath = Path()
     private val boidPath = Path()
     private val boidMat = Matrix()
-
-    @Inject
-    @TextPaint
-    lateinit var textPaint: Paint
 
     @Inject
     @BoidPaint
     lateinit var boidPaint: Paint
 
     @Inject
+    @BoidSightPaint
+    lateinit var boidSightPaint: Paint
+
+    @Inject
     @BorderPaint
     lateinit var borderPaint: Paint
 
+    @Inject
+    @BoidsBoardBackgroundPaint
+    lateinit var boardBackgroundPaint: Paint
 
     init {
         this.holder.addCallback(this)
@@ -66,13 +67,26 @@ class BoidsSimulationView(
                         canvas = holder.lockCanvas()
                         if (canvas == null) {
                             Timber.w("Canvas is null. Skipping frame")
-//                            return@collect
+                            return@collect
                         }
 
-                        canvas!!.drawColor(Color.LTGRAY)
+                        canvas!!.drawPaint(boardBackgroundPaint)
+
                         boids.forEach { boid ->
                             drawBoid(boid, canvas!!)
                         }
+
+                        val debugBoid = true
+                        if (debugBoid) {
+                            // Draw sight range
+                            canvas!!.drawCircle(
+                                boids.first().position.x,
+                                boids.first().position.y,
+                                250f,
+                                boidSightPaint
+                            )
+                        }
+
                         drawBorder(canvas!!)
                         holder.unlockCanvasAndPost(canvas)
 
@@ -134,5 +148,6 @@ class BoidsSimulationView(
             transform(boidMat)
         }
         canvas.drawPath(boidPath, boidPaint)
+        canvas.drawPath(boidPath, borderPaint)
     }
 }
