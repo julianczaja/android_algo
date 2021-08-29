@@ -54,8 +54,7 @@ class BoidsFragment : Fragment() {
 
         binding.bottomSheetContent.boidOptions.sliderBoidsCount.addOnSliderTouchListener(object :
             Slider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: Slider) {
-            }
+            override fun onStartTrackingTouch(slider: Slider) {}
 
             override fun onStopTrackingTouch(slider: Slider) {
                 binding.boidsSimulationView.setBoidsCount(slider.value.toInt())

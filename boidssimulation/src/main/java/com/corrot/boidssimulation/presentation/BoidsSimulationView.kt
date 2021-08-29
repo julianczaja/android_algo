@@ -1,4 +1,4 @@
-package com.android_algo.algorithms.boids
+package com.corrot.boidssimulation.presentation
 
 import android.content.Context
 import android.graphics.*
@@ -6,7 +6,12 @@ import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.lifecycle.*
-import com.android_algo.di.*
+import com.corrot.boidssimulation.di.BoidPaint
+import com.corrot.boidssimulation.di.BoidSightPaint
+import com.corrot.boidssimulation.di.BoidsBoardBackgroundPaint
+import com.corrot.boidssimulation.di.BorderPaint
+import com.corrot.boidssimulation.model.Boid
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect

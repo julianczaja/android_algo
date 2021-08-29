@@ -1,8 +1,9 @@
-package com.android_algo.algorithms.boids
+package com.corrot.boidssimulation
 
-import com.android_algo.math.Float2
-import com.android_algo.math.distance
-import com.android_algo.math.normalize
+import com.corrot.boidssimulation.model.Boid
+import com.example.simplemath.Float2
+import com.example.simplemath.distance
+import com.example.simplemath.normalize
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -73,11 +74,6 @@ class BoidsSimulation(
             cohesion /= boidsInRange.size.toFloat()
             cohesion -= boid.position
             cohesion = normalize(cohesion) * boid.speed
-//
-//            println("Separation: $separation")
-//            println("alignment: $alignment")
-//            println("cohesion: $cohesion")
-//            println("------------------------")
 
             boid.velocity += separation * separationGain
             boid.velocity += alignment * alignmentGain
@@ -91,12 +87,12 @@ class BoidsSimulation(
 
         // Check boundaries
         // version 1
-//        if (newPos.x < 0) newPos.x = bounds.x
-//        else if (newPos.y < 0) newPos.y = bounds.y
-//        if (newPos.x > bounds.x) newPos.x = 0f
-//        else if (newPos.y > bounds.y) newPos.y = 0f
-//
-//        boid.position = newPos
+        // if (newPos.x < 0) newPos.x = bounds.x
+        // else if (newPos.y < 0) newPos.y = bounds.y
+        // if (newPos.x > bounds.x) newPos.x = 0f
+        // else if (newPos.y > bounds.y) newPos.y = 0f
+        //
+        // boid.position = newPos
 
         // version 2
         if (newPos.x > 0 && newPos.x < bounds.x && newPos.y > 0 && newPos.y < bounds.y) {

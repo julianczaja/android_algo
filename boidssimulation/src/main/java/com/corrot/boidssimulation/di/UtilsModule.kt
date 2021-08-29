@@ -1,9 +1,9 @@
-package com.android_algo.di
+package com.corrot.boidssimulation.di
 
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
-import com.android_algo.R
+import com.corrot.boidssimulation.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

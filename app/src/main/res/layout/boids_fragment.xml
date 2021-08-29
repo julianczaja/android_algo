@@ -17,7 +17,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.android_algo.algorithms.boids.BoidsSimulationView
+    <com.corrot.boidssimulation.presentation.BoidsSimulationView
         android:id="@+id/boids_simulation_view"
         android:layout_width="0dp"
         android:layout_height="0dp"

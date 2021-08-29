@@ -16,7 +16,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 
-package com.android_algo.math
+package com.example.simplemath
 
 import kotlin.math.abs
 import kotlin.math.max

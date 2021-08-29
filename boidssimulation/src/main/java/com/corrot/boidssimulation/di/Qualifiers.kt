@@ -1,4 +1,4 @@
-package com.android_algo.di
+package com.corrot.boidssimulation.di
 
 import javax.inject.Qualifier
 

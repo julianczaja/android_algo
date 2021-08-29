@@ -1,7 +1,9 @@
-package com.android_algo.algorithms.boids
+package com.corrot.boidssimulation.presentation
 
 import androidx.lifecycle.ViewModel
-import com.android_algo.math.Float2
+import com.corrot.boidssimulation.BoidsSimulation
+import com.corrot.boidssimulation.model.Boid
+import com.example.simplemath.Float2
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber

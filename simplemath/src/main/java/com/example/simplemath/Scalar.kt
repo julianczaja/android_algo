@@ -16,7 +16,7 @@
 
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 
-package com.android_algo.math
+package com.example.simplemath
 
 const val PI = 3.1415926536f
 const val HALF_PI = PI * 0.5f
