@@ -1,0 +1,115 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_separation_slider_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/separation"
+        app:layout_constraintBottom_toBottomOf="@+id/slider_separation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_separation"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:value="0.2"
+        android:valueFrom="0"
+        android:valueTo="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_alignment_slider_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/alignment"
+        app:layout_constraintBottom_toBottomOf="@+id/slider_alignment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/slider_alignment" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_alignment"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:value="0.01"
+        android:valueFrom="0"
+        android:valueTo="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_separation" />
+
+    <TextView
+        android:id="@+id/tv_cohesion_slider_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/cohesion"
+        app:layout_constraintBottom_toBottomOf="@+id/slider_cohesion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slider_alignment" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_cohesion"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:value="0.2"
+        android:valueFrom="0"
+        android:valueTo="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_alignment" />
+
+    <TextView
+        android:id="@+id/tv_sight_slider_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/sight_range"
+        app:layout_constraintBottom_toBottomOf="@+id/slider_sight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/slider_sight" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_sight"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:stepSize="1"
+        android:value="250"
+        android:valueFrom="1"
+        android:valueTo="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_cohesion" />
+
+    <TextView
+        android:id="@+id/tv_boids_count_slider_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/boids_count"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="@+id/slider_boids_count" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_boids_count"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:stepSize="1"
+        android:value="30"
+        android:valueFrom="1"
+        android:valueTo="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_sight" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

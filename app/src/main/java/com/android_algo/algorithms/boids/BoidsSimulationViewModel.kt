@@ -12,7 +12,7 @@ class BoidsSimulationViewModel : ViewModel() {
     private var isRunning = false
     private var lastFrameTime = System.currentTimeMillis()
 
-    val boids: Flow<List<Boid>> = flow {
+    val boids: Flow<MutableList<Boid>> = flow {
         while (true) {
             if (isRunning) {
                 val dt = System.currentTimeMillis() - lastFrameTime
@@ -20,10 +20,30 @@ class BoidsSimulationViewModel : ViewModel() {
 
                 boidsSimulation.update(dt)
                 emit(boidsSimulation.boids)
-
-//                delay(kotlin.math.max(0L, 33L - dt))
             }
         }
+    }
+
+    fun setSeparationGain(gain: Float) {
+        boidsSimulation.separationGain = gain
+    }
+
+    fun setAlignmentGain(gain: Float) {
+        boidsSimulation.alignmentGain = gain
+    }
+
+    fun setCohesionGain(gain: Float) {
+        boidsSimulation.cohesionGain = gain
+    }
+
+    fun setSightRange(sightRange: Float) {
+        boidsSimulation.sightRange = sightRange
+    }
+
+    fun setBoidsCount(boidsCount: Int) {
+        stopSimulation()
+        boidsSimulation.updateBoidsCount(boidsCount)
+        startSimulation()
     }
 
     fun updateBoardBounds(width: Int, height: Int) {

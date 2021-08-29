@@ -4,4 +4,10 @@
     <string name="dashboard">Dashboard</string>
     <string name="boids_simulation">Boids simulation</string>
     <string name="random_walk">Random walk</string>
+    <string name="options">Options</string>
+    <string name="alignment">Alignment</string>
+    <string name="cohesion">Cohesion</string>
+    <string name="separation">Separation</string>
+    <string name="sight_range">Sight range</string>
+    <string name="boids_count">Boids count</string>
 </resources>

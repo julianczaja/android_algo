@@ -21,8 +21,7 @@ class UtilsModule {
     fun provideBoidPaint(@ApplicationContext context: Context): Paint {
         return Paint().apply {
             color = context.resources.getColor(R.color.boids, context.theme)
-            strokeWidth = 5f
-            style = Paint.Style.FILL_AND_STROKE
+            style = Paint.Style.FILL
         }
     }
 
@@ -42,12 +41,8 @@ class UtilsModule {
     fun provideBorderPaint(): Paint {
         return Paint().apply {
             color = Color.BLACK
-            strokeJoin = Paint.Join.MITER
-            strokeCap = Paint.Cap.SQUARE
             style = Paint.Style.STROKE
-            isAntiAlias = false
-            isDither = false
-            strokeWidth = 4f
+            strokeWidth = 2f
         }
     }
 

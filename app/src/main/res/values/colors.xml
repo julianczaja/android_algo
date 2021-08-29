@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="boids">#CCFFFFFF</color>
-    <color name="boidsSight">#1A00BCD4</color>
+    <color name="boids">#FFFFFF</color>
+    <color name="boidsSight">#1AFFFFFF</color>
     <color name="boidsText">#F44336</color>
-    <color name="boidsBoardBackground">#1889BD</color>
+    <color name="boidsBoardBackground">#1C97CF</color>
 
 </resources>

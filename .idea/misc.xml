@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/julian.czaja/AndroidStudioProjects/android_algo/app/src/main/res/layout/activity_main.xml" value="0.259375" />
+        <entry key="app/src/main/res/drawable/rounded_sheet.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/boids_fragment.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/bottom_sheet_boids.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/bottom_sheet_boids_options.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/bottom_sheet_options.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/options_boids_content.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/random_walk_fragment.xml" value="0.35520833333333335" />
       </map>
     </option>

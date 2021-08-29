@@ -18,13 +18,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.android_algo.algorithms.boids.BoidsSimulationView
-        android:id="@+id/surface_view"
-        android:layout_width="match_parent"
+        android:id="@+id/boids_simulation_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_boids_label" />
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/bottom_sheet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/bottom_sheet_content"
+            layout="@layout/bottom_sheet_boids_options" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
